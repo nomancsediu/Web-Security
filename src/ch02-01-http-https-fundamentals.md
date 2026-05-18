@@ -1,74 +1,115 @@
 # HTTP and HTTPS Fundamentals
 
-HTTP (HyperText Transfer Protocol) is the foundation of data communication on the web. Understanding HTTP is essential for web security because many attacks exploit the properties and behaviors of this protocol.
+HTTP is the language of the web. Every time you visit a website, click a link, or submit a form, your browser is speaking HTTP to a server. If you want to understand web security, you need to understand HTTP first. Period.
 
-## HTTP Basics
+## The Basics: Request and Response
 
-HTTP is a request-response protocol. A client (usually a browser) sends a request to a server, and the server sends back a response. Each HTTP request and response consists of:
+HTTP is simple at its core. Your browser sends a **request**, and the server sends back a **response**. That is the whole model.
 
-- A start line (method, URL, and version for requests; status code and reason for responses)
-- Headers (metadata about the request or response)
-- An optional body (the actual data being sent)
+A request looks like this:
 
-### HTTP Methods
+```http
+GET /profile HTTP/1.1
+Host: example.com
+Cookie: session=abc123
+```
 
-Common HTTP methods include:
+And a response looks like this:
 
-- **GET** - Retrieve a resource
-- **POST** - Submit data to be processed
-- **PUT** - Replace a resource entirely
-- **PATCH** - Partially update a resource
-- **DELETE** - Remove a resource
-- **OPTIONS** - Query supported methods
-- **HEAD** - Retrieve headers only
+```http
+HTTP/1.1 200 OK
+Content-Type: text/html
+Set-Cookie: session=abc123; Secure; HttpOnly
 
-Security consideration: Some applications only protect POST endpoints while neglecting GET or other methods. Always ensure access controls are applied consistently across all HTTP methods.
+<html>Hello there</html>
+```
 
-### HTTP Status Codes
+Every request and response has three parts:
 
-Status codes indicate the result of a request:
+1. **The start line.** For requests, this is the method, URL, and version. For responses, this is the status code.
+2. **The headers.** These are key value pairs that carry metadata. Things like what type of content is being sent, who is authenticated, what cookies to set.
+3. **The body.** This is the actual data being sent. Not all requests and responses have a body.
 
-- **1xx** - Informational
-- **2xx** - Success (200 OK, 201 Created)
-- **3xx** - Redirection (301 Moved Permanently, 302 Found)
-- **4xx** - Client Error (400 Bad Request, 401 Unauthorized, 403 Forbidden, 404 Not Found)
-- **5xx** - Server Error (500 Internal Server Error)
+## HTTP Methods
 
-### HTTP Headers
+Methods tell the server what kind of action you want to perform. The most common ones:
 
-Headers carry important metadata. Security-relevant headers include:
+- **GET** means "give me this resource." You use it when you visit a URL or click a link. It should not change anything on the server.
+- **POST** means "here is some data, process it." You use it when submitting a form or creating something.
+- **PUT** means "replace this entire resource with what I am giving you."
+- **PATCH** means "update part of this resource."
+- **DELETE** means "remove this resource."
 
-- `Authorization` - Contains authentication credentials
-- `Cookie` - Sends cookies to the server
-- `Set-Cookie` - Server instructs the browser to store a cookie
-- `Content-Type` - Specifies the media type of the resource
-- `Referer` - Indicates the page that linked to the current request
-- `Origin` - Indicates the origin of the request (used in CORS)
+From a security perspective, here is the important part: **some applications only protect POST endpoints but forget about GET, PUT, or DELETE.** Always make sure access controls are applied consistently across all methods.
 
-## HTTPS
+## Status Codes
 
-HTTPS (HTTP Secure) adds TLS encryption on top of HTTP. This provides:
+The server tells you what happened using status codes. Here are the ones you will see most often:
 
-- **Confidentiality** - Data is encrypted in transit
-- **Integrity** - Data cannot be modified without detection
-- **Authentication** - The server's identity is verified via certificates
+- **200 OK** means everything worked
+- **301 Moved Permanently** means the resource has a new URL
+- **302 Found** means temporary redirect
+- **400 Bad Request** means you sent something invalid
+- **401 Unauthorized** means you need to log in
+- **403 Forbidden** means you are logged in but not allowed to do this
+- **404 Not Found** means the resource does not exist
+- **500 Internal Server Error** means something broke on the server
 
-Without HTTPS, an attacker on the network can intercept, read, and modify all HTTP traffic—a classic man-in-the-middle attack.
+Security tip: sometimes applications leak information through error messages. A 500 error that shows a stack trace is telling the attacker way too much about your system.
 
-### TLS Handshake
+## Headers You Should Know
 
-The TLS handshake establishes a secure connection:
+Headers carry a lot of important information. Here are the ones that matter most for security:
 
-1. Client sends a ClientHello with supported cipher suites
-2. Server responds with ServerHello and its certificate
-3. Client verifies the certificate
-4. Both parties negotiate session keys
+- **Authorization** carries authentication credentials
+- **Cookie** sends stored cookies to the server
+- **Set-Cookie** tells the browser to store a cookie
+- **Content-Type** says what kind of data is in the body
+- **Referer** tells the server which page you came from
+- **Origin** indicates where the request originated from, used for CORS
+
+Attackers love headers. They can manipulate headers to bypass security controls, steal information, or trick servers into doing unexpected things.
+
+## HTTPS: HTTP with Encryption
+
+Plain HTTP sends everything in readable text. If someone is on the same network as you, they can read every request and response. Your passwords, your cookies, your data. All visible.
+
+HTTPS fixes this by adding TLS encryption on top of HTTP. This gives you three things:
+
+1. **Confidentiality.** Nobody can read your data in transit.
+2. **Integrity.** Nobody can modify your data without you knowing.
+3. **Authentication.** You can verify you are talking to the real server, not an impostor.
+
+Without HTTPS, an attacker on the same WiFi network as you can intercept and modify your web traffic. This is called a **man in the middle attack** and it is surprisingly easy to pull off.
+
+## The TLS Handshake
+
+When you connect to an HTTPS site, this is roughly what happens:
+
+1. Your browser says hello and tells the server what encryption methods it supports
+2. The server responds with its certificate and chosen encryption method
+3. Your browser verifies the certificate is valid and trusted
+4. Both sides generate session keys
 5. Encrypted communication begins
 
-### Common HTTPS Misconfigurations
+All of this happens in a fraction of a second. You do not even notice it.
 
-- Using outdated TLS versions (TLS 1.0, 1.1)
-- Weak cipher suites
-- Self-signed certificates without proper pinning
-- Mixed content (HTTPS page loading HTTP resources)
-- Missing HTTP Strict Transport Security (HSTS) headers
+## Common HTTPS Mistakes
+
+Just having HTTPS is not enough. You have to configure it properly:
+
+- **Using old TLS versions.** TLS 1.0 and 1.1 are broken. Only use TLS 1.2 or 1.3.
+- **Weak cipher suites.** Not all encryption methods are equal. Some are broken and should be disabled.
+- **Mixed content.** If your HTTPS page loads resources over HTTP, attackers can modify those resources. Everything should be HTTPS.
+- **Missing HSTS.** Without the Strict Transport Security header, browsers might still try HTTP first before upgrading to HTTPS. That first HTTP connection is vulnerable.
+- **Self signed certificates.** These might encrypt traffic but they do not prove identity. Anyone can create one. Only use them for development, never in production.
+
+## Key Takeaways
+
+- HTTP is the foundation of all web communication. Understand it well.
+- Every request and response has a method, headers, and optionally a body.
+- HTTPS is not optional anymore. It is required for any serious application.
+- Misconfigured HTTPS is almost as bad as no HTTPS at all.
+- Headers are a rich attack surface. We will come back to them many times.
+
+Now that we understand how data moves between clients and servers, let us look at how domain names get resolved and why that matters for security.
