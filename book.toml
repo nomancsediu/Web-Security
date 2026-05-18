@@ -1,0 +1,15 @@
+[book]
+title = "Web Security"
+authors = ["Your Name", "Contributions from the Community"]
+language = "en"
+multilingual = false
+src = "src"
+
+[output.html]
+default-theme = "navy"
+git-repository-url = "https://github.com/yourusername/web-security-book"
+additional-css = ["theme/custom.css"]
+additional-js = []
+
+[output.html.search]
+use-boolean-and = true

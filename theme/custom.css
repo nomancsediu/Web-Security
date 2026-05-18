@@ -1,0 +1,72 @@
+/* Custom theme for Web Security Book */
+
+:root {
+    --sidebar-width: 280px;
+    --page-padding: 15px;
+    --content-max-width: 900px;
+}
+
+/* Security-themed color scheme */
+body {
+    font-family: "Noto Serif SC", "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+/* Code blocks */
+pre code {
+    font-family: "Sarasa Mono SC", "Fira Code", "Consolas", monospace;
+}
+
+/* Warning/Note boxes */
+.warning {
+    background-color: #fff3cd;
+    border-left: 4px solid #ffc107;
+    padding: 10px 15px;
+    margin: 15px 0;
+}
+
+.note {
+    background-color: #d1ecf1;
+    border-left: 4px solid #17a2b8;
+    padding: 10px 15px;
+    margin: 15px 0;
+}
+
+.danger {
+    background-color: #f8d7da;
+    border-left: 4px solid #dc3545;
+    padding: 10px 15px;
+    margin: 15px 0;
+}
+
+/* Navigation styling */
+nav {
+    font-size: 0.9em;
+}
+
+/* Table styling */
+table {
+    border-collapse: collapse;
+    width: 100%;
+    margin: 15px 0;
+}
+
+th, td {
+    border: 1px solid #ddd;
+    padding: 8px 12px;
+    text-align: left;
+}
+
+th {
+    background-color: #f5f5f5;
+    font-weight: bold;
+}
+
+/* Links */
+a {
+    color: #0366d6;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
