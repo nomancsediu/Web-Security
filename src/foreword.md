@@ -1,11 +1,15 @@
 # Foreword
 
-The internet has become the backbone of modern society. From banking and healthcare to social connections and entertainment, nearly every aspect of our lives now depends on web applications. With this dependence comes an enormous responsibility: the responsibility to protect the data, privacy, and safety of billions of users worldwide.
+The internet is everywhere. We use it for banking, shopping, chatting, learning, and so much more. Almost everything we do online runs through web applications. And that means there is a lot of sensitive data flowing around. Personal info, passwords, credit cards, medical records. All of it needs to be protected.
 
-Web security is one of the most critical and rapidly evolving fields in technology. Every day, new vulnerabilities are discovered, new attack techniques emerge, and new defenses are developed. Staying current with web security knowledge is not optional—it is essential for anyone who builds, maintains, or depends on web applications.
+That is where web security comes in.
 
-This book was born from a simple observation: while there are many resources about web security, few provide a structured, comprehensive learning path that takes you from the basics to advanced topics. Most resources assume prior knowledge, skip important fundamentals, or focus on theory without practical application.
+Every single day, someone somewhere is trying to break into a website, steal data, or trick users into giving up their information. New vulnerabilities are found all the time. New attack methods show up. New defenses are built. It never stops.
 
-Here, we aim to change that. This book provides a complete journey through web security, starting with how the web works and progressing through common vulnerabilities, defense strategies, secure development practices, and incident response. Every concept is explained clearly, every attack is demonstrated safely, and every defense is practical and actionable.
+When I first started looking into web security, I felt lost. There were so many resources out there, but most of them assumed I already knew a lot. They jumped straight into advanced stuff. They used terms I did not understand. They showed attacks without explaining why they work. I kept thinking, where do I even start?
 
-We hope this book empowers you to build more secure applications and contributes to a safer internet for everyone.
+That is why I started writing this. I wanted to create something that starts from the very beginning. Something that explains things in plain language. Something that shows not just how attacks work, but also how to defend against them. Something practical, not just theoretical.
+
+I am not claiming this is the ultimate web security resource. It is just my attempt to learn and document things in a way that makes sense to me. If it helps you too, that is awesome.
+
+Let us learn together.
