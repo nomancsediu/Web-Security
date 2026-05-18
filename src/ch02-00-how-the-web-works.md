@@ -1,5 +1,9 @@
 # How the Web Works
 
-To secure web applications, you first need to understand how the web works at a fundamental level. Many web vulnerabilities arise from misunderstandings or oversights in how HTTP, DNS, browsers, and sessions operate. This chapter covers the essential protocols and mechanisms that underpin the web, with a focus on their security implications.
+You cannot secure something you do not understand. That is just a fact. Before we can talk about web vulnerabilities and how to defend against them, we need to understand how the web actually works under the hood.
 
-Understanding these fundamentals is crucial because attackers often exploit the gap between how a technology is *supposed* to work and how it *actually* works. By understanding the intricacies of web protocols, you will be better equipped to identify and prevent security issues.
+I know what you are thinking. "I already know how the web works. I build websites." But trust me, most web vulnerabilities exist because developers do not fully understand the underlying protocols. There is a gap between how we think the web works and how it actually works. Attackers exploit that gap.
+
+So let us close that gap. We are going to look at how HTTP and HTTPS work, how DNS resolves domain names, how browsers enforce security boundaries, and how cookies and sessions keep us logged in. Each of these topics has security implications that we will revisit throughout the rest of the book.
+
+This chapter might feel like a refresher if you have been developing for a while. But I promise, looking at these fundamentals through a security lens will change how you think about them. Let us get into it.
